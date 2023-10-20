@@ -206,27 +206,29 @@ test_pipeline = [
             dict(type='Collect', keys=['img']),
         ])
 ]
-data = dict(
-    imgs_per_gpu=2,
-    workers_per_gpu=2,
-    train=dict(
+train_dataloader = dict(
+    batch_size=2,
+    dataset=dict(
         type=dataset_type,
         ann_file=data_root + "/train/annotations.json",
         img_prefix=data_root + "/train/",
-        pipeline=train_pipeline),
-    val=dict(
+        pipeline=train_pipeline))
+val_dataloader = dict(
+    dataset=dict(
         type=dataset_type,
         ann_file=data_root + "/val/annotations.json",
         img_prefix=data_root + "/val/",
-        pipeline=test_pipeline),
-    test=dict(
+        pipeline=test_pipeline))
+test_dataloader = dict(
+    dataset=dict(
         type=dataset_type,
         ann_file=data_root + "/test/annotations.json",
         img_prefix=data_root + "/test/",
         pipeline=test_pipeline))
 # optimizer
-optimizer = dict(type='SGD', lr=0.005, momentum=0.9, weight_decay=0.0001)
-optimizer_config = dict(grad_clip=dict(max_norm=35, norm_type=2))
+optim_wrapper = dict(
+    type='OptimWrapper',
+    optimizer=dict(type='SGD', lr=0.005, momentum=0.9, weight_decay=0.0001))
 # learning policy
 lr_config = dict(
     policy='step',
@@ -234,6 +236,7 @@ lr_config = dict(
     warmup_iters=500,
     warmup_ratio=1.0 / 3,
     step=[8, 11])
+
 checkpoint_config = dict(interval=1)
 # yapf:disable
 log_config = dict(
