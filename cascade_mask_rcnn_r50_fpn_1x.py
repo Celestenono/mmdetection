@@ -162,6 +162,7 @@ train_cfg = dict(
             debug=False)
     ],
     stage_loss_weights=[1, 0.5, 0.25])
+
 test_cfg = dict(
     rpn=dict(
         nms_across_levels=False,
@@ -176,6 +177,7 @@ test_cfg = dict(
         max_per_img=100,
         mask_thr_binary=0.5),
     keep_all_stages=False)
+val_cfg = test_cfg
 # dataset settings
 dataset_type = 'MyDataset'
 data_root = "/scratch/nmoreau/glom_seg/data_for_training_patches/"
@@ -225,6 +227,15 @@ test_dataloader = dict(
         ann_file=data_root + "/test/annotations.json",
         img_prefix=data_root + "/test/",
         pipeline=test_pipeline))
+
+val_evaluator = dict(  # Validation evaluator config
+    type='CocoMetric',  # The coco metric used to evaluate AR, AP, and mAP for detection and instance segmentation
+    ann_file=data_root + "/val/annotations.json",  # Annotation file path
+    metric=['bbox', 'segm'],  # Metrics to be evaluated, `bbox` for detection and `segm` for instance segmentation
+    format_only=False,
+    backend_args=backend_args)
+
+test_evaluator = val_evaluator
 # optimizer
 optim_wrapper = dict(
     type='OptimWrapper',
