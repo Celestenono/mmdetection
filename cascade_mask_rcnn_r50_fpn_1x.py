@@ -1,4 +1,5 @@
 # model settings
+default_scope = 'mmdet'
 model = dict(
     type='CascadeRCNN',
     num_stages=3,
