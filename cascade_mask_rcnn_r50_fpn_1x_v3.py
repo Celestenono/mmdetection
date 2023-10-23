@@ -355,7 +355,7 @@ env_cfg = dict(
 #     type='LogProcessor',  # Log processor to process runtime logs
 #     window_size=50,  # Smooth interval of log values
 #     by_epoch=True)  # Whether to format logs with epoch type. Should be consistent with the train loop's type.
-
+work_dir = '/scratch/nmoreau/glom_seg/mmdetection_work_dirs/'
 log_level = 'INFO'  # The level of logging.
 load_from = None  # Load model checkpoint as a pre-trained model from a given path. This will not resume training.
 resume = False  # Whether to resume from the checkpoint defined in `load_from`. If `load_from` is None, it will resume the latest checkpoint in the `work_dir`.
