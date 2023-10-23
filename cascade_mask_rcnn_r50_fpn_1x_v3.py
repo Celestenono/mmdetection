@@ -237,8 +237,8 @@ train_dataloader = dict(   # Train dataloader config
         type=dataset_type,
     metainfo=dict(classes=classes),
         data_root=data_root,
-        ann_file="/train/annotations.json",  # Path of annotation file
-        data_prefix=dict(img="/train/"),  # Prefix of image path
+        ann_file=ata_root +"/train/annotations.json",  # Path of annotation file
+        data_prefix=dict(img=ata_root +"/train/"),  # Prefix of image path
         filter_cfg=dict(filter_empty_gt=True, min_size=32),  # Config of filtering images and annotations
         pipeline=train_pipeline))
         # backend_args=backend_args))
@@ -254,8 +254,8 @@ val_dataloader = dict(  # Validation dataloader config
         type=dataset_type,
         metainfo=dict(classes=classes),
         data_root=data_root,
-        ann_file="/val/annotations.json",
-        data_prefix=dict(img="/val/"),
+        ann_file=ata_root +"/val/annotations.json",
+        data_prefix=dict(img=ata_root +"/val/"),
         test_mode=True,  # Turn on the test mode of the dataset to avoid filtering annotations or images
         pipeline=test_pipeline))
         # backend_args=backend_args))
@@ -277,8 +277,8 @@ test_dataloader = dict(
         type=dataset_type,
         metainfo=dict(classes=classes),
         data_root=data_root,
-        ann_file="/test/annotations.json",
-        data_prefix=dict(img="/test/"),
+        ann_file=data_root + "/test/annotations.json",
+        data_prefix=dict(img=data_root + "/test/"),
         test_mode=True,
         pipeline=test_pipeline))
 test_evaluator = dict(
