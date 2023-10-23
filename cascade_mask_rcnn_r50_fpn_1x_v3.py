@@ -1,6 +1,6 @@
 # model settings
 model = dict(
-    type=CascadeRCNN,
+    type='CascadeRCNN',
     data_preprocessor=dict(
         type=DetDataPreprocessor,
         mean=[123.675, 116.28, 103.53],
