@@ -233,7 +233,6 @@ train_dataloader = dict(   # Train dataloader config
         shuffle=True),  # randomly shuffle the training data in each epoch
     batch_sampler=dict(type='AspectRatioBatchSampler'),  # Batch sampler for grouping images with similar aspect ratio into a same batch. It can reduce GPU memory cost.
     dataset=dict(  # Train dataset config
-        type=dataset_type,
         data_root=data_root,
         ann_file="/train/annotations.json",  # Path of annotation file
         data_prefix=dict(img="/train/"),  # Prefix of image path
@@ -249,7 +248,6 @@ val_dataloader = dict(  # Validation dataloader config
         type='DefaultSampler',
         shuffle=False),  # not shuffle during validation and testing
     dataset=dict(
-        type=dataset_type,
         data_root=data_root,
         ann_file="/val/annotations.json",
         data_prefix=dict(img="/val/"),
@@ -271,7 +269,6 @@ test_dataloader = dict(
     drop_last=False,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
-        type=dataset_type,
         data_root=data_root,
         ann_file="/test/annotations.json",
         data_prefix=dict(img="/test/"),
