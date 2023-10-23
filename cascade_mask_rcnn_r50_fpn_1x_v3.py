@@ -268,7 +268,7 @@ val_evaluator = dict(  # Validation evaluator config
 # inference on test dataset and
 # format the output results for submission.
 test_dataloader = dict(
-    batch_size=1,
+    batch_size=2,
     num_workers=2,
     persistent_workers=True,
     drop_last=False,
