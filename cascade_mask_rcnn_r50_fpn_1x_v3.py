@@ -196,7 +196,8 @@ model = dict(
 
 # dataset settings
 dataset_type = 'CocoDataset'  # Dataset type, this will be used to define the dataset
-classes = ("glom")
+# classes = ("glom")
+# data_root = "/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/data_for_training_patches/"
 data_root = "/scratch/nmoreau/glom_seg/data_for_training_patches/"  # Root path of data
 backend_args = None # Arguments to instantiate the corresponding file backend
 
@@ -213,8 +214,8 @@ train_pipeline = [  # Training data processing pipeline
         ),
     dict(
         type='RandomFlip',  # Augmentation pipeline that flips the images and their annotations
-        prob=0.5)  # The probability to flip
-    # dict(type='PackDetInputs')  # Pipeline that formats the annotation data and decides which keys in the data should be packed into data_samples
+        prob=0.5),  # The probability to flip
+    dict(type='PackDetInputs')  # Pipeline that formats the annotation data and decides which keys in the data should be packed into data_samples
 ]
 test_pipeline = [  # Testing data processing pipeline
     dict(type='LoadImageFromFile'),  # First pipeline to load images from file path
@@ -224,6 +225,13 @@ test_pipeline = [  # Testing data processing pipeline
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',
                    'scale_factor'))
 ]
+
+metainfo = {
+    'classes': ('glom', ),
+    'palette': [
+        (220, 20, 60),
+    ]
+}
 
 train_dataloader = dict(   # Train dataloader config
     batch_size=2,  # Batch size of a single GPU
@@ -235,10 +243,10 @@ train_dataloader = dict(   # Train dataloader config
     # batch_sampler=dict(type='AspectRatioBatchSampler'),  # Batch sampler for grouping images with similar aspect ratio into a same batch. It can reduce GPU memory cost.
     dataset=dict(  # Train dataset config
         type=dataset_type,
-        metainfo=dict(classes=classes),
+        metainfo=metainfo,
         data_root=data_root,
-        ann_file=data_root +"/train/annotations.json",  # Path of annotation file
-        data_prefix=dict(img=data_root +"/train/"),  # Prefix of image path
+        ann_file=data_root +"annotations/train.json",  # Path of annotation file
+        data_prefix=dict(img="train/"),  # Prefix of image path
         filter_cfg=dict(filter_empty_gt=True, min_size=32),  # Config of filtering images and annotations
         pipeline=train_pipeline))
         # backend_args=backend_args))
@@ -341,12 +349,9 @@ log_processor = dict(
 default_scope = 'mmdet'  # The default registry scope to find modules. Refer to https://mmengine.readthedocs.io/en/latest/advanced_tutorials/registry.html
 
 env_cfg = dict(
-    # cudnn_benchmark=False,  # Whether to enable cudnn benchmark
-    mp_cfg=dict(  # Multi-processing config
-        mp_start_method='fork',  # Use fork to start multi-processing threads. 'fork' usually faster than 'spawn' but maybe unsafe. See discussion in https://github.com/pytorch/pytorch/issues/1355
-        opencv_num_threads=0),  # Disable opencv multi-threads to avoid system being overloaded
-    dist_cfg=dict(backend='nccl'),  # Distribution configs
-)
+cudnn_benchmark=False,
+mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0),
+dist_cfg=dict(backend='nccl'))
 
 # vis_backends = [dict(type='LocalVisBackend')]  # Visualization backends. Refer to https://mmengine.readthedocs.io/en/latest/advanced_tutorials/visualization.html
 # visualizer = dict(
@@ -356,6 +361,7 @@ env_cfg = dict(
 #     window_size=50,  # Smooth interval of log values
 #     by_epoch=True)  # Whether to format logs with epoch type. Should be consistent with the train loop's type.
 work_dir = '/scratch/nmoreau/glom_seg/mmdetection_work_dirs/'
+# work_dir = '/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/mmdetection_work_dirs/'
 log_level = 'INFO'  # The level of logging.
 load_from = None  # Load model checkpoint as a pre-trained model from a given path. This will not resume training.
 resume = False  # Whether to resume from the checkpoint defined in `load_from`. If `load_from` is None, it will resume the latest checkpoint in the `work_dir`.
