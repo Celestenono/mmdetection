@@ -235,7 +235,7 @@ train_dataloader = dict(   # Train dataloader config
     batch_sampler=dict(type='AspectRatioBatchSampler'),  # Batch sampler for grouping images with similar aspect ratio into a same batch. It can reduce GPU memory cost.
     dataset=dict(  # Train dataset config
         type=dataset_type,
-    metainfo=dict(classes=classes),
+        metainfo=dict(classes=classes),
         data_root=data_root,
         ann_file=data_root +"/train/annotations.json",  # Path of annotation file
         data_prefix=dict(img=data_root +"/train/"),  # Prefix of image path
