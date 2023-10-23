@@ -56,7 +56,7 @@ model = dict(
                 sampling_ratio=2),  # Sampling ratio when extracting the RoI features. 0 means adaptive ratio.
             out_channels=256,  # output channels of the extracted feature.
             featmap_strides=[4, 8, 16, 32]),  # Strides of multi-scale feature maps. It should be consistent with the architecture of the backbone.
-        bbox_head=[
+        bbox_head=dict(
             dict(  # Config of box head in the RoIHead.
                 type='Shared2FCBBoxHead',  # Type of the bbox head, Refer to https://github.com/open-mmlab/mmdetection/blob/main/mmdet/models/roi_heads/bbox_heads/convfc_bbox_head.py#L220 for implementation details.
                 in_channels=256,  # Input channels for bbox head. This is consistent with the out_channels in roi_extractor
@@ -76,7 +76,6 @@ model = dict(
                     type='SmoothL1Loss',  # Type of loss, we also support many IoU Losses and smooth L1-loss, etc.
                     beta = 1.0,
                     loss_weight=1.0)),  # Loss weight of the regression branch.
-
             dict(  # Config of box head in the RoIHead.
                 type='Shared2FCBBoxHead',  # Type of the bbox head, Refer to https://github.com/open-mmlab/mmdetection/blob/main/mmdet/models/roi_heads/bbox_heads/convfc_bbox_head.py#L220 for implementation details.
                 in_channels=256,  # Input channels for bbox head. This is consistent with the out_channels in roi_extractor
@@ -115,7 +114,7 @@ model = dict(
                     type='SmoothL1Loss',  # Type of loss, we also support many IoU Losses and smooth L1-loss, etc.
                     beta = 1.0,
                     loss_weight=1.0)),  # Loss weight of the regression branch.
-            ],
+        ),
         mask_roi_extractor=dict(  # RoI feature extractor for mask generation.
             type='SingleRoIExtractor',  # Type of the RoI feature extractor, most of methods uses SingleRoIExtractor.
             roi_layer=dict(  # Config of RoI Layer that extracts features for instance segmentation
@@ -162,7 +161,7 @@ model = dict(
                 iou_threshold=0.7 # NMS threshold
                 ),
             min_bbox_size=0),  # The allowed minimal box size
-        rcnn=[
+        rcnn=dict(
             dict(  # The config for the roi heads.
                 assigner=dict(  # Config of assigner for second stage, this is different for that in rpn
                     type='MaxIoUAssigner',  # Type of assigner, MaxIoUAssigner is used for all roi_heads for now. Refer to https://github.com/open-mmlab/mmdetection/blob/main/mmdet/models/task_modules/assigners/max_iou_assigner.py#L14 for more details.
@@ -217,7 +216,7 @@ model = dict(
                 mask_size=28,  # Size of mask
                 pos_weight=-1,  # The weight of positive samples during training.
                 debug=False)  # Whether to set the debug mode
-            ],
+        ),
         stage_loss_weights=[1, 0.5, 0.25]),
     test_cfg = dict(  # Config for testing hyperparameters for rpn and rcnn
         rpn=dict(  # The config to generate proposals during testing
