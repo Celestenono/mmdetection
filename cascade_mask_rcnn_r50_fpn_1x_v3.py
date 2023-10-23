@@ -59,7 +59,6 @@ model = dict(
         bbox_head=[
             dict(  # Config of box head in the RoIHead.
                 type='Shared2FCBBoxHead',  # Type of the bbox head, Refer to https://github.com/open-mmlab/mmdetection/blob/main/mmdet/models/roi_heads/bbox_heads/convfc_bbox_head.py#L220 for implementation details.
-                num_fcs=2,
                 in_channels=256,  # Input channels for bbox head. This is consistent with the out_channels in roi_extractor
                 fc_out_channels=1024,  # Output feature channels of FC layers.
                 roi_feat_size=7,  # Size of RoI features
@@ -80,7 +79,6 @@ model = dict(
 
             dict(  # Config of box head in the RoIHead.
                 type='Shared2FCBBoxHead',  # Type of the bbox head, Refer to https://github.com/open-mmlab/mmdetection/blob/main/mmdet/models/roi_heads/bbox_heads/convfc_bbox_head.py#L220 for implementation details.
-                num_fcs=2,
                 in_channels=256,  # Input channels for bbox head. This is consistent with the out_channels in roi_extractor
                 fc_out_channels=1024,  # Output feature channels of FC layers.
                 roi_feat_size=7,  # Size of RoI features
@@ -100,7 +98,6 @@ model = dict(
                     loss_weight=1.0)),  # Loss weight of the regression branch.
             dict(  # Config of box head in the RoIHead.
                 type='Shared2FCBBoxHead',  # Type of the bbox head, Refer to https://github.com/open-mmlab/mmdetection/blob/main/mmdet/models/roi_heads/bbox_heads/convfc_bbox_head.py#L220 for implementation details.
-                num_fcs=2,
                 in_channels=256,  # Input channels for bbox head. This is consistent with the out_channels in roi_extractor
                 fc_out_channels=1024,  # Output feature channels of FC layers.
                 roi_feat_size=7,  # Size of RoI features
