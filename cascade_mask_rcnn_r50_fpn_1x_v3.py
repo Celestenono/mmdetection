@@ -234,6 +234,7 @@ train_dataloader = dict(   # Train dataloader config
         shuffle=True),  # randomly shuffle the training data in each epoch
     batch_sampler=dict(type='AspectRatioBatchSampler'),  # Batch sampler for grouping images with similar aspect ratio into a same batch. It can reduce GPU memory cost.
     dataset=dict(  # Train dataset config
+        _delete_=True,
         type=dataset_type,
         metainfo=dict(classes=classes),
         data_root=data_root,
