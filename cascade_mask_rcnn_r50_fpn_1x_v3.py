@@ -195,7 +195,8 @@ model = dict(
             mask_thr_binary=0.5)))
 
 # dataset settings
-# dataset_type = 'MyDataset'  # Dataset type, this will be used to define the dataset
+dataset_type = 'CocoDataset'  # Dataset type, this will be used to define the dataset
+classes = ("glom")
 data_root = "/scratch/nmoreau/glom_seg/data_for_training_patches/"  # Root path of data
 backend_args = None # Arguments to instantiate the corresponding file backend
 
@@ -233,6 +234,8 @@ train_dataloader = dict(   # Train dataloader config
         shuffle=True),  # randomly shuffle the training data in each epoch
     batch_sampler=dict(type='AspectRatioBatchSampler'),  # Batch sampler for grouping images with similar aspect ratio into a same batch. It can reduce GPU memory cost.
     dataset=dict(  # Train dataset config
+        type=dataset_type,
+    metainfo=dict(classes=classes),
         data_root=data_root,
         ann_file="/train/annotations.json",  # Path of annotation file
         data_prefix=dict(img="/train/"),  # Prefix of image path
@@ -248,6 +251,8 @@ val_dataloader = dict(  # Validation dataloader config
         type='DefaultSampler',
         shuffle=False),  # not shuffle during validation and testing
     dataset=dict(
+        type=dataset_type,
+        metainfo=dict(classes=classes),
         data_root=data_root,
         ann_file="/val/annotations.json",
         data_prefix=dict(img="/val/"),
@@ -269,6 +274,8 @@ test_dataloader = dict(
     drop_last=False,
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
+        type=dataset_type,
+        metainfo=dict(classes=classes),
         data_root=data_root,
         ann_file="/test/annotations.json",
         data_prefix=dict(img="/test/"),
