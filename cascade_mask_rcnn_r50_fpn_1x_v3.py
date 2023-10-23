@@ -242,58 +242,58 @@ train_dataloader = dict(   # Train dataloader config
         filter_cfg=dict(filter_empty_gt=True, min_size=32),  # Config of filtering images and annotations
         pipeline=train_pipeline))
         # backend_args=backend_args))
-val_dataloader = dict(  # Validation dataloader config
-    batch_size=2,  # Batch size of a single GPU. If batch-size > 1, the extra padding area may influence the performance.
-    num_workers=2,  # Worker to pre-fetch data for each single GPU
-    persistent_workers=True,  # If ``True``, the dataloader will not shut down the worker processes after an epoch end, which can accelerate training speed.
-    drop_last=False,  # Whether to drop the last incomplete batch, if the dataset size is not divisible by the batch size
-    sampler=dict(
-        type='DefaultSampler',
-        shuffle=False),  # not shuffle during validation and testing
-    dataset=dict(
-        type=dataset_type,
-        metainfo=dict(classes=classes),
-        data_root=data_root,
-        ann_file=data_root +"/val/annotations.json",
-        data_prefix=dict(img=data_root +"/val/"),
-        test_mode=True,  # Turn on the test mode of the dataset to avoid filtering annotations or images
-        pipeline=test_pipeline))
-        # backend_args=backend_args))
-val_evaluator = dict(  # Validation evaluator config
-    type='CocoMetric',  # The coco metric used to evaluate AR, AP, and mAP for detection and instance segmentation
-    ann_file=data_root + "/val/annotations.json",  # Annotation file path
-    metric=['bbox', 'segm'],  # Metrics to be evaluated, `bbox` for detection and `segm` for instance segmentation
-    format_only=False)
+# val_dataloader = dict(  # Validation dataloader config
+#     batch_size=2,  # Batch size of a single GPU. If batch-size > 1, the extra padding area may influence the performance.
+#     num_workers=2,  # Worker to pre-fetch data for each single GPU
+#     persistent_workers=True,  # If ``True``, the dataloader will not shut down the worker processes after an epoch end, which can accelerate training speed.
+#     drop_last=False,  # Whether to drop the last incomplete batch, if the dataset size is not divisible by the batch size
+#     sampler=dict(
+#         type='DefaultSampler',
+#         shuffle=False),  # not shuffle during validation and testing
+#     dataset=dict(
+#         type=dataset_type,
+#         metainfo=dict(classes=classes),
+#         data_root=data_root,
+#         ann_file=data_root +"/val/annotations.json",
+#         data_prefix=dict(img=data_root +"/val/"),
+#         test_mode=True,  # Turn on the test mode of the dataset to avoid filtering annotations or images
+#         pipeline=test_pipeline))
+#         # backend_args=backend_args))
+# val_evaluator = dict(  # Validation evaluator config
+#     type='CocoMetric',  # The coco metric used to evaluate AR, AP, and mAP for detection and instance segmentation
+#     ann_file=data_root + "/val/annotations.json",  # Annotation file path
+#     metric=['bbox', 'segm'],  # Metrics to be evaluated, `bbox` for detection and `segm` for instance segmentation
+#     format_only=False)
     # backend_args=backend_args)
 # inference on test dataset and
 # format the output results for submission.
-test_dataloader = dict(
-    batch_size=2,
-    num_workers=2,
-    persistent_workers=True,
-    drop_last=False,
-    sampler=dict(type='DefaultSampler', shuffle=False),
-    dataset=dict(
-        type=dataset_type,
-        metainfo=dict(classes=classes),
-        data_root=data_root,
-        ann_file=data_root + "/test/annotations.json",
-        data_prefix=dict(img=data_root + "/test/"),
-        test_mode=True,
-        pipeline=test_pipeline))
-test_evaluator = dict(
-    type='CocoMetric',
-    ann_file=data_root + "/test/annotations.json",
-    metric=['bbox', 'segm'],  # Metrics to be evaluated
-    format_only=True,  # Only format and save the results to coco json file
-    outfile_prefix='/scratch/nmoreau/glom_seg/mmdetection_work_dirs/test')  # The prefix of output json files
+# test_dataloader = dict(
+#     batch_size=2,
+#     num_workers=2,
+#     persistent_workers=True,
+#     drop_last=False,
+#     sampler=dict(type='DefaultSampler', shuffle=False),
+#     dataset=dict(
+#         type=dataset_type,
+#         metainfo=dict(classes=classes),
+#         data_root=data_root,
+#         ann_file=data_root + "/test/annotations.json",
+#         data_prefix=dict(img=data_root + "/test/"),
+#         test_mode=True,
+#         pipeline=test_pipeline))
+# test_evaluator = dict(
+#     type='CocoMetric',
+#     ann_file=data_root + "/test/annotations.json",
+#     metric=['bbox', 'segm'],  # Metrics to be evaluated
+#     format_only=True,  # Only format and save the results to coco json file
+#     outfile_prefix='/scratch/nmoreau/glom_seg/mmdetection_work_dirs/test')  # The prefix of output json files
 
 train_cfg = dict(
     type='EpochBasedTrainLoop',  # The training loop type. Refer to https://github.com/open-mmlab/mmengine/blob/main/mmengine/runner/loops.py
     max_epochs=15,  # Maximum training epochs
     val_interval=1)  # Validation intervals. Run validation every epoch.
-val_cfg = dict(type='ValLoop')  # The validation loop type
-test_cfg = dict(type='TestLoop')  # The testing loop type
+# val_cfg = dict(type='ValLoop')  # The validation loop type
+# test_cfg = dict(type='TestLoop')  # The testing loop type
 
 optim_wrapper = dict(  # Optimizer wrapper config
     type='OptimWrapper',  # Optimizer wrapper type, switch to AmpOptimWrapper to enable mixed precision training.
