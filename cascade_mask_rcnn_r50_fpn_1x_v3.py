@@ -195,7 +195,7 @@ model = dict(
             mask_thr_binary=0.5)))
 
 # dataset settings
-dataset_type = 'MyDataset'  # Dataset type, this will be used to define the dataset
+# dataset_type = 'MyDataset'  # Dataset type, this will be used to define the dataset
 data_root = "/scratch/nmoreau/glom_seg/data_for_training_patches/"  # Root path of data
 backend_args = None # Arguments to instantiate the corresponding file backend
 
