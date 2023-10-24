@@ -301,8 +301,8 @@ train_cfg = dict(
     type='EpochBasedTrainLoop',  # The training loop type. Refer to https://github.com/open-mmlab/mmengine/blob/main/mmengine/runner/loops.py
     max_epochs=15,  # Maximum training epochs
     val_interval=1)  # Validation intervals. Run validation every epoch.
-# val_cfg = dict(type='ValLoop')  # The validation loop type
-# test_cfg = dict(type='TestLoop')  # The testing loop type
+val_cfg = dict(type='ValLoop')  # The validation loop type
+test_cfg = dict(type='TestLoop')  # The testing loop type
 
 optim_wrapper = dict(  # Optimizer wrapper config
     type='OptimWrapper',  # Optimizer wrapper type, switch to AmpOptimWrapper to enable mixed precision training.
