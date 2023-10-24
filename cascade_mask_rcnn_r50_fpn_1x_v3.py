@@ -196,9 +196,10 @@ model = dict(
 
 # dataset settings
 dataset_type = 'CocoDataset'  # Dataset type, this will be used to define the dataset
-# classes = ("glom")
 # data_root = "/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/data_for_training_patches/"
 data_root = "/scratch/nmoreau/glom_seg/data_for_training_patches/"  # Root path of data
+work_dir = '/scratch/nmoreau/glom_seg/mmdetection_work_dirs/'
+# work_dir = '/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/mmdetection_work_dirs/'
 backend_args = None # Arguments to instantiate the corresponding file backend
 
 train_pipeline = [  # Training data processing pipeline
@@ -245,56 +246,56 @@ train_dataloader = dict(   # Train dataloader config
         type=dataset_type,
         metainfo=metainfo,
         data_root=data_root,
-        ann_file=data_root +"annotations/train.json",  # Path of annotation file
+        ann_file="train/annotations.json",  # Path of annotation file
         data_prefix=dict(img="train/"),  # Prefix of image path
         filter_cfg=dict(filter_empty_gt=True, min_size=32),  # Config of filtering images and annotations
         pipeline=train_pipeline))
         # backend_args=backend_args))
-# val_dataloader = dict(  # Validation dataloader config
-#     batch_size=2,  # Batch size of a single GPU. If batch-size > 1, the extra padding area may influence the performance.
-#     num_workers=2,  # Worker to pre-fetch data for each single GPU
-#     persistent_workers=True,  # If ``True``, the dataloader will not shut down the worker processes after an epoch end, which can accelerate training speed.
-#     drop_last=False,  # Whether to drop the last incomplete batch, if the dataset size is not divisible by the batch size
-#     sampler=dict(
-#         type='DefaultSampler',
-#         shuffle=False),  # not shuffle during validation and testing
-#     dataset=dict(
-#         type=dataset_type,
-#         metainfo=dict(classes=classes),
-#         data_root=data_root,
-#         ann_file=data_root +"/val/annotations.json",
-#         data_prefix=dict(img=data_root +"/val/"),
-#         test_mode=True,  # Turn on the test mode of the dataset to avoid filtering annotations or images
-#         pipeline=test_pipeline))
-#         # backend_args=backend_args))
-# val_evaluator = dict(  # Validation evaluator config
-#     type='CocoMetric',  # The coco metric used to evaluate AR, AP, and mAP for detection and instance segmentation
-#     ann_file=data_root + "/val/annotations.json",  # Annotation file path
-#     metric=['bbox', 'segm'],  # Metrics to be evaluated, `bbox` for detection and `segm` for instance segmentation
-#     format_only=False)
+val_dataloader = dict(  # Validation dataloader config
+    batch_size=2,  # Batch size of a single GPU. If batch-size > 1, the extra padding area may influence the performance.
+    num_workers=2,  # Worker to pre-fetch data for each single GPU
+    persistent_workers=True,  # If ``True``, the dataloader will not shut down the worker processes after an epoch end, which can accelerate training speed.
+    drop_last=False,  # Whether to drop the last incomplete batch, if the dataset size is not divisible by the batch size
+    sampler=dict(
+        type='DefaultSampler',
+        shuffle=False),  # not shuffle during validation and testing
+    dataset=dict(
+        type=dataset_type,
+        metainfo=metainfo,
+        data_root=data_root,
+        ann_file="val/annotations.json",
+        data_prefix=dict(img="val/"),
+        test_mode=True,  # Turn on the test mode of the dataset to avoid filtering annotations or images
+        pipeline=test_pipeline))
+        # backend_args=backend_args))
+val_evaluator = dict(  # Validation evaluator config
+    type='CocoMetric',  # The coco metric used to evaluate AR, AP, and mAP for detection and instance segmentation
+    ann_file=data_root + "/val/annotations.json",  # Annotation file path
+    metric=['bbox', 'segm'],  # Metrics to be evaluated, `bbox` for detection and `segm` for instance segmentation
+    format_only=False)
     # backend_args=backend_args)
 # inference on test dataset and
 # format the output results for submission.
-# test_dataloader = dict(
-#     batch_size=2,
-#     num_workers=2,
-#     persistent_workers=True,
-#     drop_last=False,
-#     sampler=dict(type='DefaultSampler', shuffle=False),
-#     dataset=dict(
-#         type=dataset_type,
-#         metainfo=dict(classes=classes),
-#         data_root=data_root,
-#         ann_file=data_root + "/test/annotations.json",
-#         data_prefix=dict(img=data_root + "/test/"),
-#         test_mode=True,
-#         pipeline=test_pipeline))
-# test_evaluator = dict(
-#     type='CocoMetric',
-#     ann_file=data_root + "/test/annotations.json",
-#     metric=['bbox', 'segm'],  # Metrics to be evaluated
-#     format_only=True,  # Only format and save the results to coco json file
-#     outfile_prefix='/scratch/nmoreau/glom_seg/mmdetection_work_dirs/test')  # The prefix of output json files
+test_dataloader = dict(
+    batch_size=2,
+    num_workers=2,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        metainfo=metainfo,
+        data_root=data_root,
+        ann_file="test/annotations.json",
+        data_prefix=dict(img="test/"),
+        test_mode=True,
+        pipeline=test_pipeline))
+test_evaluator = dict(
+    type='CocoMetric',
+    ann_file=data_root + "/test/annotations.json",
+    metric=['bbox', 'segm'],  # Metrics to be evaluated
+    format_only=True,  # Only format and save the results to coco json file
+    outfile_prefix='/scratch/nmoreau/glom_seg/mmdetection_work_dirs/test')  # The prefix of output json files
 
 train_cfg = dict(
     type='EpochBasedTrainLoop',  # The training loop type. Refer to https://github.com/open-mmlab/mmengine/blob/main/mmengine/runner/loops.py
@@ -360,8 +361,7 @@ dist_cfg=dict(backend='nccl'))
 #     type='LogProcessor',  # Log processor to process runtime logs
 #     window_size=50,  # Smooth interval of log values
 #     by_epoch=True)  # Whether to format logs with epoch type. Should be consistent with the train loop's type.
-work_dir = '/scratch/nmoreau/glom_seg/mmdetection_work_dirs/'
-# work_dir = '/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/mmdetection_work_dirs/'
+
 log_level = 'INFO'  # The level of logging.
 load_from = None  # Load model checkpoint as a pre-trained model from a given path. This will not resume training.
 resume = False  # Whether to resume from the checkpoint defined in `load_from`. If `load_from` is None, it will resume the latest checkpoint in the `work_dir`.
