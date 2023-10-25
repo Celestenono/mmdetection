@@ -342,7 +342,8 @@ param_scheduler = [
 
 default_hooks = dict(
     checkpoint=dict(type='CheckpointHook', interval=1),
-    logger=dict(type='LoggerHook', interval=50))
+    logger=dict(type='LoggerHook', interval=50),
+    visualization=dict(type='VisualizationHook'))
     # Optional: set moving average window size
 log_processor = dict(
     type='LogProcessor', window_size=50)
@@ -353,12 +354,6 @@ env_cfg = dict(
 cudnn_benchmark=False,
 mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0),
 dist_cfg=dict(backend='nccl'))
-
-visualization=dict( # user visualization of validation and test results
-    type='DetVisualizationHook',
-    draw=False,
-    interval=1,
-    show=False)
 
 # vis_backends = [dict(type='LocalVisBackend')]  # Visualization backends. Refer to https://mmengine.readthedocs.io/en/latest/advanced_tutorials/visualization.html
 # visualizer = dict(
