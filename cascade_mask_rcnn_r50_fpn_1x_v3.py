@@ -216,7 +216,7 @@ train_pipeline = [  # Training data processing pipeline
     dict(
         type='RandomFlip',  # Augmentation pipeline that flips the images and their annotations
         prob=0.5),  # The probability to flip
-    dict(type='PackDetInputs')  # Pipeline that formats the annotation data and decides which keys in the data should be packed into data_samples
+    dict(type='PackDetInputs') # Pipeline that formats the annotation data and decides which keys in the data should be packed into data_samples
 ]
 test_pipeline = [  # Testing data processing pipeline
     dict(type='LoadImageFromFile'),  # First pipeline to load images from file path
@@ -353,6 +353,12 @@ env_cfg = dict(
 cudnn_benchmark=False,
 mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0),
 dist_cfg=dict(backend='nccl'))
+
+visualization=dict( # user visualization of validation and test results
+    type='DetVisualizationHook',
+    draw=False,
+    interval=1,
+    show=False)
 
 # vis_backends = [dict(type='LocalVisBackend')]  # Visualization backends. Refer to https://mmengine.readthedocs.io/en/latest/advanced_tutorials/visualization.html
 # visualizer = dict(
