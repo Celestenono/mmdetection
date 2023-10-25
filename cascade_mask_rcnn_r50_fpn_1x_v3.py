@@ -343,7 +343,7 @@ param_scheduler = [
 default_hooks = dict(
     checkpoint=dict(type='CheckpointHook', interval=1),
     logger=dict(type='LoggerHook', interval=50),
-    visualization=dict(type="DetVisualizationHook", draw=True, show=True))
+    visualization=dict(type="DetVisualizationHook"))
     # Optional: set moving average window size
 log_processor = dict(
     type='LogProcessor', window_size=50)
