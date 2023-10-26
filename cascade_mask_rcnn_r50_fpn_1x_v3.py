@@ -196,10 +196,10 @@ model = dict(
 
 # dataset settings
 dataset_type = 'CocoDataset'  # Dataset type, this will be used to define the dataset
-data_root = "/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/data_for_training_patches/"
-# data_root = "/scratch/nmoreau/glom_seg/data_for_training_patches/"  # Root path of data
-# work_dir = '/scratch/nmoreau/glom_seg/mmdetection_work_dirs/'
-work_dir = '/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/mmdetection_work_dirs/'
+# data_root = "/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/data_for_training_patches/"
+data_root = "/scratch/nmoreau/glom_seg/data_for_training_patches/"  # Root path of data
+work_dir = '/scratch/nmoreau/glom_seg/mmdetection_work_dirs/'
+# work_dir = '/Users/nmoreau/Documents/Data/Kidney/new_organization/processed_data/glom_seg/mmdetection_work_dirs/'
 backend_args = None # Arguments to instantiate the corresponding file backend
 
 train_pipeline = [  # Training data processing pipeline
