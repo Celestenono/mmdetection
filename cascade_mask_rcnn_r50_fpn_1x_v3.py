@@ -355,9 +355,9 @@ cudnn_benchmark=False,
 mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0),
 dist_cfg=dict(backend='nccl'))
 
-# vis_backends = [dict(type='LocalVisBackend')]  # Visualization backends. Refer to https://mmengine.readthedocs.io/en/latest/advanced_tutorials/visualization.html
-# visualizer = dict(
-#     type='DetLocalVisualizer', vis_backends=vis_backends, name='visualizer')
+vis_backends = [dict(type='LocalVisBackend')]  # Visualization backends. Refer to https://mmengine.readthedocs.io/en/latest/advanced_tutorials/visualization.html
+visualizer = dict(
+    type='DetLocalVisualizer', vis_backends=vis_backends, name='visualizer')
 # log_processor = dict(
 #     type='LogProcessor',  # Log processor to process runtime logs
 #     window_size=50,  # Smooth interval of log values
